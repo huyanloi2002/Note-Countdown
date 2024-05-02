@@ -4,6 +4,7 @@ const Countdown = ({
   hours = 0,
   date = new Date().getDate(),
   ISOString = "",
+  fontSize = "",
 }) => {
   const [day, setDay] = useState(0);
   const [hour, setHour] = useState(0);
@@ -50,7 +51,9 @@ const Countdown = ({
 
   return (
     <React.Fragment>
-      <div className="flex justify-center font-bold tracking-[1px]">
+      <div
+        className={`flex justify-center font-bold tracking-[1px] ${fontSize}`}
+      >
         <div className="hour">{day < 10 ? `0${day}` : day}:</div>
         <div className="hour ">{hour < 10 ? `0${hour}` : hour}:</div>
         <div className="minute ">{minute < 10 ? `0${minute}` : minute}:</div>

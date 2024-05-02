@@ -1,10 +1,18 @@
 import React from "react";
+import OutstandingNote from "./components/OutstandingNote";
 import CreateNote from "./components/CreateNote";
+import ListNotes from "./components/ListNotes";
+import EditNote from "./components/EditNote";
+import Calendar from "./components/Calendar";
 
 function App() {
   return (
     <React.Fragment>
-      <CreateNote />
+      <OutstandingNote />
+      <Calendar />
+      {/* <CreateNote />
+      <ListNotes />
+      <EditNote /> */}
     </React.Fragment>
   );
 }
