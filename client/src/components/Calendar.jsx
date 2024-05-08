@@ -4,10 +4,16 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
 import "../styles/fullcalendar.css";
 
+import {
+  setModalPositionX,
+  setModalPositionY,
+} from "../utils/setPositionModalEvent";
+
 const Calendar = () => {
   const [isHover, setIsHover] = useState(false);
   const [publicId, setPublicId] = useState("");
   const [positionX, setPositionX] = useState("right-[-200px]");
+  const [positionY, setPositionY] = useState("top-[-50%]");
 
   const handleEventClick = (agr) => {
     console.log(agr);
@@ -20,36 +26,45 @@ const Calendar = () => {
     setIsHover(true);
     const { publicId } = agr.event._def;
     setPublicId(publicId);
-    const { clientX } = agr.jsEvent;
-    const calendarWidth = calendarRef.current.getBoundingClientRect().width;
-    const modalEventWidth = modalRef.current.getBoundingClientRect().width;
 
-    if (clientX >= calendarWidth - modalEventWidth) {
-      setPositionX("left-[-200px]");
-    } else {
-      setPositionX("right-[-200px]");
-    }
+    //Position Event Modal
+    const { clientX, clientY } = agr.jsEvent;
+    const { width: calendarWidth, height: calendarHeight } =
+      calendarRef.current.getBoundingClientRect();
+    const { width: modalEventWidth, bottom: modalEventBottom } =
+      modalRef.current.getBoundingClientRect();
+
+    const positionX = setModalPositionX(
+      clientX,
+      calendarWidth,
+      modalEventWidth
+    );
+    setPositionX(positionX);
+
+    const positionY = setModalPositionY(
+      clientY,
+      calendarHeight,
+      modalEventBottom
+    );
+    setPositionY(positionY);
   };
 
   const renderEventContent = (eventInfo) => {
     const { title, extendedProps, publicId: id } = eventInfo.event._def;
-    console.log(eventInfo);
 
     return (
       <div
         className="bg-primary rounded-full text-center relative"
         ref={modalRef}
       >
-        <p className="text-[10px] uppercase font-bold p-1 break-all text-ellipsis">
-          {title}
-        </p>
+        <p className="text-[10px] uppercase font-bold p-1 truncate">{title}</p>
         {isHover && publicId === id && (
           <div
-            className={`modal-day absolute top-[-50%] ${positionX} !text-[black] z-50 h-[300px] w-[200px]
+            className={`modal-day py-1 px-3 absolute ${positionY} ${positionX} !text-[black] z-50 w-[200px]
             transition-all delay-100 ease-in-out rounded-md bg-white shadow-2xl border-2
             `}
           >
-            <p>{title}</p>
+            <p className="font-bold uppercase truncate">{title}</p>
             <p>{extendedProps.description}</p>
             <p>{extendedProps.dayStr}</p>
             <p>{extendedProps.time}</p>
@@ -80,7 +95,7 @@ const Calendar = () => {
 
   return (
     <React.Fragment>
-      <div className="w-full" ref={calendarRef}>
+      <div className="w-full h-full" ref={calendarRef}>
         <FullCalendar
           plugins={[dayGridPlugin, interactionPlugin]}
           initialView="dayGridMonth"
@@ -95,7 +110,7 @@ const Calendar = () => {
             },
             {
               id: "ghjk",
-              title: "Ngay sinh cua chu tich Ho Chi Minh",
+              title: "Ngay sinh cua chu tich Ho Chi Minh Asdasdasd",
               description: "19/05",
               time: "15:00",
               dayStr: "2024-05-19",
