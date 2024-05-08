@@ -1,0 +1,33 @@
+body::-webkit-scrollbar,
+.fc-scroller::-webkit-scrollbar {
+  display: none;
+}
+
+.fc {
+  background-color: white;
+}
+
+.fc .fc-daygrid-day {
+  cursor: pointer;
+}
+
+.fc .fc-day-other .fc-daygrid-day-top {
+  opacity: 1 !important;
+}
+
+.fc .fc-day-other .fc-daygrid-day-top .day-number-cell-content {
+  opacity: 0.3 !important;
+}
+
+.fc .fc-daygrid-day .btn-add-day {
+  opacity: 0 !important;
+}
+
+.fc .fc-daygrid-day:hover .btn-add-day {
+  opacity: 1 !important;
+}
+
+.fc-h-event {
+  background-color: transparent !important;
+  border: none;
+}

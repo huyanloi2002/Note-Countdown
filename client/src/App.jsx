@@ -1,4 +1,5 @@
 import React from "react";
+import "./styles/App.css";
 import OutstandingNote from "./components/OutstandingNote";
 import CreateNote from "./components/CreateNote";
 import ListNotes from "./components/ListNotes";
